@@ -1,4 +1,4 @@
-#difference of proc_close & proc_terminate
+#Difference of proc_close & proc_terminate
 ```php
 <?php
 $desc = []; 
