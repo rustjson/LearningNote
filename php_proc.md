@@ -1,4 +1,4 @@
-#Difference of proc_close & proc_terminate
+#Difference of ```proc_close``` & ```proc_terminate```
 ```php
 <?php
 $desc = []; 
@@ -50,3 +50,6 @@ getrusage(RUSAGE_SELF, {ru_utime={0, 260960}, ru_stime={0, 49992}, ...}) = 0
 write(1, "died\n", 5died
 ```
 ```proc_terminate()``` send a signal kill to child process!
+
+Here is the source of [```proc_close()```](http://lxr.php.net/xref/PHP_5_5/ext/standard/proc_open.c#323)
+ And [```proc_terminate()```](http://lxr.php.net/xref/PHP_5_5/ext/standard/proc_open.c#293)
