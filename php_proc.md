@@ -10,7 +10,8 @@ echo "died\n";
 exit(0);
 ```
 
-Run about script, It will stuck at ```proc_close()```
+Run above script, we won't be able to see 'died' get printed out, cause It will stuck at ```proc_close()```
+
 Here is the result of strace:
 ```bash
 nanosleep({10, 0}, 0x7fff332df5d0)      = 0
