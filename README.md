@@ -14,6 +14,14 @@ nginx   14053 nobody    6u  IPv4 303704      0t0  TCP *:http (LISTEN)
 
 ```
 
+# example of update-alternatives 
+```bash
+#add 
+sudo update-alternatives --install /usr/bin/phpize phpize /home/jason/php/5.4.11/bin/phpize 1 
+#config
+sudo update-alternatives --config phpize
+```
+
 
 :tiger: 王小湖北，你给我站住！:kissing_heart: 
 
