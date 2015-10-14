@@ -20,6 +20,9 @@ nginx   14053 nobody    6u  IPv4 303704      0t0  TCP *:http (LISTEN)
 sudo update-alternatives --install /usr/bin/phpize phpize /home/jason/php/5.4.11/bin/phpize 1 
 #config
 sudo update-alternatives --config phpize
+
+#remove
+sudo update-alternatives --remove phpize /usr/local/php/5.4.11/bin/php-phpize
 ```
 
 
