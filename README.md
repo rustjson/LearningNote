@@ -25,6 +25,30 @@ sudo update-alternatives --config phpize
 sudo update-alternatives --remove phpize /usr/local/php/5.4.11/bin/php-phpize
 ```
 
+# source of brk
+https://github.com/torvalds/linux/blob/master/mm/mmap.c#L286
+## Q
+```
+#include <stdio.h>
+#include <unistd.h>
+
+int main() {
+    int *base = sbrk(0);
+        
+    brk(base + 1);//expand 4bytes(sizeof int) memory 
+                                                                        
+    printf("base.addr=%p\n", base);
+    printf("base+1.addr=%p\n", base + 1); 
+    printf("After, brk(), current.addr=%p\n", sbrk(0));
+    
+    *base = 1; #comment out brk, It will seg here.
+    *(base + 1)  = 1;#Why It won't seg me here.
+
+    return 0;
+}
+```
+
+
 
 :tiger: 王小湖北，你给我站住！:kissing_heart: 
 
