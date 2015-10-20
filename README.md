@@ -27,8 +27,8 @@ sudo update-alternatives --remove phpize /usr/local/php/5.4.11/bin/php-phpize
 
 # source of brk
 https://github.com/torvalds/linux/blob/master/mm/mmap.c#L286
-## Q
-```
+## Q Why this won't seg me?
+```c
 #include <stdio.h>
 #include <unistd.h>
 
@@ -47,6 +47,32 @@ int main() {
     return 0;
 }
 ```
+Now I get it:
+```C
+#include <stdio.h>
+#include <unistd.h>
+
+int main() {
+    int *base = sbrk(0);
+    int pagesize = getpagesize();
+
+    brk(base + 1);//Here are page aligned!!!!!!!!                       
+
+    printf("pagesize=%d\n", pagesize);
+    printf("base.addr=%p\n", base);
+    printf("base+1.addr=%p\n", base + 1); 
+    printf("After, brk(), current.addr=%p\n", sbrk(0));
+    
+    *base = 1;
+    *(base + pagesize/sizeof(int) - 1)   = 1;
+    printf("Next, please seg me!\n");
+    *(base + pagesize/sizeof(int))   = 1;
+
+    return 0;
+}
+
+```
+
 
 
 
