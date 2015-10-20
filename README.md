@@ -27,7 +27,7 @@ sudo update-alternatives --remove phpize /usr/local/php/5.4.11/bin/php-phpize
 
 # source of brk
 https://github.com/torvalds/linux/blob/master/mm/mmap.c#L286
-## Q Why this won't seg me?
+## Q: Why this won't seg me?
 ```c
 #include <stdio.h>
 #include <unistd.h>
@@ -47,7 +47,9 @@ int main() {
     return 0;
 }
 ```
-Now I get it:
+
+## A: Because it is page aligned?
+
 ```C
 #include <stdio.h>
 #include <unistd.h>
