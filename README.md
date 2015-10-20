@@ -28,6 +28,7 @@ sudo update-alternatives --remove phpize /usr/local/php/5.4.11/bin/php-phpize
 # source of brk
 https://github.com/torvalds/linux/blob/master/mm/mmap.c#L286
 ## Q: Why this won't seg me?
+## Q：为什么操作(base + 1)不会出现段错误？
 ```c
 #include <stdio.h>
 #include <unistd.h>
@@ -48,7 +49,8 @@ int main() {
 }
 ```
 
-## A: Because it is page aligned?
+## A: Because it is page aligned!
+## A: 因为brk内部也有页对齐！
 
 ```C
 #include <stdio.h>
@@ -69,13 +71,22 @@ int main() {
     *(base + pagesize/sizeof(int) - 1)   = 1;
     printf("Next, please seg me!\n");
     *(base + pagesize/sizeof(int))   = 1;
-
+    //sleep(10000); sleep a long time, I need to get
+    //the virtual address range of the heap of this program
+    //sudo cat /proc/PID/maps |grep heap
     return 0;
 }
 
 ```
+## A:Another proof:
+## A：另外一个证明的方法：
 
-
+```bash
+sudo cat /proc/PID/maps |grep heap
+#This command could get the virtual address of heap, result are the same
+#with output of above progrma 
+#通过这个命令拿到堆的地址，和上面程序打印出来的地址完全一模一样
+```
 
 
 :tiger: 王小湖北，你给我站住！:kissing_heart: 
