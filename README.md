@@ -88,10 +88,31 @@ sudo cat /proc/PID/maps |grep heap
 #通过这个命令拿到堆的地址，和上面程序打印出来的地址完全一模一样
 ```
 
+# How to get source code of basic command in ubuntu like ```ls top``` etc
+# 在ubuntu下如何找到基本命令(``ls top```等)的源码
+```bash
+> dpkg -S /bin/ls
+coreutils: /bin/ls
+#So coreutils is the package that contains command ls.
+```
+Then goto this page [Ubuntu – Ubuntu Packages Search](http://packages.ubuntu.com/), search it by using that keyword
 
-:tiger: 王小湖北，你给我站住！:kissing_heart: 
+然后到这个页面[Ubuntu – Ubuntu Packages Search](http://packages.ubuntu.com/)里用得到的关键字搜索
 
-好吧别理我，我今天早上没吃:pill: 
+top's package download page： http://packages.ubuntu.com/trusty/procps ，On the right side!
+
+top所在包的下载页面 http://packages.ubuntu.com/trusty/procps 右边有一个souce下载。是他是他就是他！
+
+
+
+
+
+
+---
+
+## :tiger: 王小湖北，你给我站住！:kissing_heart: 
+
+## 好吧别理我，我今天早上没吃:pill: 
 
 
 
