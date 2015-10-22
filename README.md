@@ -120,6 +120,13 @@ MMUPageSize:           4 kB
 Locked:                0 kB
 ```
 Both Shared and Clean has two part of Clean and Dirty. But what does that respent?
+see [stackexchange](http://unix.stackexchange.com/questions/33381/getting-information-about-a-process-memory-usage-from-proc-pid-smaps)
+
+Dirty 表示页是脏的, 即与磁盘后备文件的内容不一致, 需要(或正在)写回后备设备
+Clean 表示页的内容和后备是一致的.
+
+See [fs/proc/task_mmu.c](https://github.com/torvalds/linux/blob/v4.2/fs/proc/task_mmu.c#L613)
+
 
 
 
