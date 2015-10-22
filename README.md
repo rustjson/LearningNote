@@ -103,7 +103,23 @@ top's package download page： http://packages.ubuntu.com/trusty/procps ，On th
 
 top所在包的下载页面 http://packages.ubuntu.com/trusty/procps 右边有一个souce下载。是他是他就是他！
 
+---
 
+## What if the difference of Shared and Clean?
+```
+Shared_Clean:          0 kB
+Shared_Dirty:          0 kB
+Private_Clean:         0 kB
+Private_Dirty:         0 kB
+Referenced:            0 kB
+Anonymous:             0 kB
+AnonHugePages:         0 kB
+Swap:                  0 kB
+KernelPageSize:        4 kB
+MMUPageSize:           4 kB
+Locked:                0 kB
+```
+Both Shared and Clean has two part of Clean and Dirty. But what does that respent?
 
 
 
