@@ -125,11 +125,20 @@ see [stackexchange](http://unix.stackexchange.com/questions/33381/getting-inform
 Dirty 表示页是脏的, 即与磁盘后备文件的内容不一致, 需要(或正在)写回后备设备
 Clean 表示页的内容和后备是一致的.
 
-See [fs/proc/task_mmu.c](https://github.com/torvalds/linux/blob/v4.2/fs/proc/task_mmu.c#L613)
+See [fs/proc/task_mmu.c#show_smap](https://github.com/torvalds/linux/blob/v3.18/fs/proc/task_mmu.c#L587)
+See [/mm/pagewalk.c#walk_page_range](https://github.com/torvalds/linux/blob/v3.18/mm/pagewalk.c#L167)
 
+For both difference of private and shared, dirty and clean :
+See [private_dirty_modify](https://github.com/torvalds/linux/blob/v3.18/fs/proc/task_mmu.c#L496)
 
-
-
+When talking about private and shared, that is simple, as code shows, 
+```
+if (page_mapcount(page)>=2) {
+    //shared
+} else {
+    //private
+}
+```
 
 ---
 
