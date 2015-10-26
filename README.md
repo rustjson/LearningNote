@@ -89,7 +89,7 @@ sudo cat /proc/PID/maps |grep heap
 ```
 ---
 ## How to get source code of basic command in ubuntu like ```ls top``` etc
-## 在ubuntu下如何找到基本命令(``ls top```等)的源码
+## 在ubuntu下如何找到基本命令(```ls top```等)的源码
 ```bash
 > dpkg -S /bin/ls
 coreutils: /bin/ls
