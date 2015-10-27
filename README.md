@@ -139,6 +139,9 @@ if (page_mapcount(page)>=2) {
     //private
 }
 ```
+---
+
+ref: [How much memory are applications really using?](http://www.eqware.net/Articles/CapturingProcessMemoryUsageUnderLinux/)
 
 ---
 
