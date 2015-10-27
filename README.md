@@ -142,6 +142,7 @@ if (page_mapcount(page)>=2) {
 ---
 
 ref: [How much memory are applications really using?](http://www.eqware.net/Articles/CapturingProcessMemoryUsageUnderLinux/)
+[pagemap - The Linux Kernel Archives](https://www.kernel.org/doc/Documentation/vm/pagemap.txt)
 
 ---
 
