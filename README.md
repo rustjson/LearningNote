@@ -151,8 +151,47 @@ ref: [How much memory are applications really using?](http://www.eqware.net/Arti
 It sets the close-on-exec flag for the file descriptor, which causes the file descriptor to be automatically (and atomically) closed when any of the exec-family functions succeed.[stackoverflow](http://stackoverflow.com/questions/6125068/what-does-the-fd-cloexec-fcntl-flag-do)
 
 ## What happend to fd when a parent process exit without ```waitpid()``` his child.
-It will destroy All the fd resource！
-But if you close it from parent, child still can do opeartion on it.
+
+```C
+#include <stdio.h>                                                                                                                             
+#include <unistd.h>
+
+int main() {
+    int pid = -1; 
+    char buf[10] = {0};
+
+    pid = fork();
+    if (pid == -1) {
+        perror("fork");
+    }   
+    if (pid == 0) {//child
+        printf("[child]sleeping\n");
+        sleep(2);//sleep to wait parent exit;
+        write(1, "[child]nihao\n", 13);
+        if (read(0, buf, 1) == -1) {
+            printf("[child]ops, read error\n");
+        }
+        _exit(0);
+    } else {
+        printf("[parent]exit\n");
+        _exit(0);   
+    }   
+}
+```
+
+```bash
+sunan at Sunan-ubuntu in ~/c/more
+○ ./fd-on-close 
+[parent]exit
+[child]sleeping
+
+sunan at Sunan-ubuntu in ~/c/more
+○ [child]nihao
+[child]ops, read error
+
+```
+See ? You can still write, but can read.
+
 
 ---
 
