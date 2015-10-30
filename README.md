@@ -144,6 +144,16 @@ if (page_mapcount(page)>=2) {
 ref: [How much memory are applications really using?](http://www.eqware.net/Articles/CapturingProcessMemoryUsageUnderLinux/)
 [pagemap - The Linux Kernel Archives](https://www.kernel.org/doc/Documentation/vm/pagemap.txt)
 
+
+
+```fcntl(fd, F_SETFD, FD_CLOEXEC)```
+
+It sets the close-on-exec flag for the file descriptor, which causes the file descriptor to be automatically (and atomically) closed when any of the exec-family functions succeed.[stackoverflow](http://stackoverflow.com/questions/6125068/what-does-the-fd-cloexec-fcntl-flag-do)
+
+## What happend to fd when a parent process exit without ```waitpid()``` his child.
+It will destroy All the fd resource！
+But if you close it from parent, child still can do opeartion on it.
+
 ---
 
 ## :tiger: 王小湖北，你给我站住！:kissing_heart: 
