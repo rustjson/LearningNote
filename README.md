@@ -153,7 +153,7 @@ It sets the close-on-exec flag for the file descriptor, which causes the file de
 ## What happend to fd when a parent process exit without ```waitpid()``` his child.
 
 ```C
-#include <stdio.h>                                                                                                                             
+#include <stdio.h>
 #include <unistd.h>
 
 int main() {
@@ -170,10 +170,13 @@ int main() {
         write(1, "[child]nihao\n", 13);
         if (read(0, buf, 1) == -1) {
             printf("[child]ops, read error\n");
-        }
+        }   
         _exit(0);
     } else {
         printf("[parent]exit\n");
+        //if (waitpid(pid, NULL, 0) < 0) {
+        //     perror("waitpid error\n");
+        //} 
         _exit(0);   
     }   
 }
