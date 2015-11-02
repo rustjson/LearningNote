@@ -198,6 +198,60 @@ See ? You can still write, but can read.
 ---
 ### Why async curl slower then curl on a 8 core machine when curl a static page servie by nginx
 
+---
+### Why execute a new command by using ```./a.out``` always create a new process group ?
+### 为什么```./```执行出来的命令总是一个新的进程组？
+
+### Guess:
+### 猜：
+Inside ./a.out, bash create execute ```clone()``` and then ```setpgid(0, PID)``` then ```execve(a.out...)```
+
+当你执行./a.out的时候，系统一次执行```clone()```然后，```setpgid(0, PID)``` 然后 ```execve(a.out...)```
+
+### Prof:
+### 证明：
+```C
+//newgroup.c
+#include <stdlib.h>
+#include <stdio.h>
+
+int main() {
+	printf("This is a marker\n");
+	sleep(1000);
+	return 0;
+}
+```
+Let's compile this file to newgroup and then use ```strace``` to trace our zsh,
+
+In my test, the PID of zsh is 9421, so simply open a new terminal and execute this:
+
+```bash
+sudo strace -esetpgid,execve,write,clone -p 9421 -f -v
+```
+And then execute our newgroup:
+
+```bash
+./newgroup
+```
+
+Outputs looks like this:
+```bash
+Process 9421 attached
+
+
+
+write(1, "\33[?1l\33>", 7)              = 7
+write(10, "\r\n", 2)                    = 2
+write(3, ": 1446459559:0;./newgroup \n", 27) = 27
+write(1, "\33]2;./newgroup\7", 15)      = 15
+write(1, "\33]1;./newgroup\7", 15)      = 15
+clone(Process 17943 attached
+child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7f4de73aba10) = 17943
+[pid 17943] setpgid(0, 17943)           = 0
+[pid 17943] execve("./newgroup", ["./newgroup"], ["SESSION_MANAGER=local/Sunan-ubun"..., "XDG_SESSION_ID=c2", "LC_IDENTIFICATION=en_US.UTF-8", "XDG_SEAT=seat0", "DISPLAY=:0", "JOB=dbus", "COLORTERM=gnome-terminal", "GNOME_KEYRING_CONTROL=/run/user/"..., "GNOME_DESKTOP_SESSION_ID=this-is"..., "DEFAULTS_PATH=/usr/share/gconf/u"..., "QT_QPA_PLATFORMTHEME=appmenu-qt5", "LOGNAME=sunan", "TEXTDOMAIN=im-config", "INSTANCE=", "LC_TIME=en_US.UTF-8", "SHELL=/bin/zsh", "PATH=/home/sunan/google-cloud-sd"..., "LC_NUMERIC=en_US.UTF-8", "LC_PAPER=en_US.UTF-8", "IM_CONFIG_PHASE=1", "TEXTDOMAINDIR=/usr/share/locale/", "CLUTTER_IM_MODULE=xim", "QT4_IM_MODULE=fcitx", "XDG_SESSION_PATH=/org/freedeskto"..., "SESSION=ubuntu", "SSH_AUTH_SOCK=/run/user/1000/key"..., "XDG_MENU_PREFIX=gnome-", "XAUTHORITY=/home/sunan/.Xauthori"..., "QT_IM_MODULE=xim", "GDMSESSION=ubuntu", "XMODIFIERS=@im=fcitx", "LC_MEASUREMENT=en_US.UTF-8", "LC_ADDRESS=en_US.UTF-8", "XDG_CONFIG_DIRS=/etc/xdg/xdg-ubu"..., "MANDATORY_PATH=/usr/share/gconf/"..., "UPSTART_SESSION=unix:abstract=/c"..., "XDG_RUNTIME_DIR=/run/user/1000", "DESKTOP_SESSION=ubuntu", "GTK_IM_MODULE=fcitx", "GTK_MODULES=overlay-scrollbar:un"..., "USER=sunan", "PWD=/home/sunan/c/more", "VTE_VERSION=3409", "LC_MONETARY=en_US.UTF-8", "HOME=/home/sunan", "XDG_SEAT_PATH=/org/freedesktop/D"..., "XDG_DATA_DIRS=/usr/share/ubuntu:"..., "LANGUAGE=fr_FR:en", "SELINUX_INIT=YES", "COMPIZ_CONFIG_PROFILE=ubuntu", "XDG_GREETER_DATA_DIR=/var/lib/li"..., "COMPIZ_BIN_PATH=/usr/bin/", "LC_NAME=en_US.UTF-8", "LANG=en_US.UTF-8", "GPG_AGENT_INFO=/run/user/1000/ke"..., "SHLVL=1", "WINDOWID=75497483", "XDG_VTNR=7", "GDM_LANG=fr_FR", "SESSIONTYPE=gnome-session", "DBUS_SESSION_BUS_ADDRESS=unix:ab"..., "XDG_CURRENT_DESKTOP=Unity", "TERM=xterm", "GNOME_KEYRING_PID=2567", "LC_TELEPHONE=en_US.UTF-8", "OLDPWD=/home/sunan/c", "ZSH=/home/sunan/.oh-my-zsh", "GOPATH=/home/sunan/golang", "GOROOT=/home/sunan/go/src/go1.5", "PAGER=less", "LESS=-R", "LC_CTYPE=fr_FR.UTF-8", "LSCOLORS=Gxfxcxdxbxegedabagacad", "_=/home/sunan/c/more/./newgroup"]) = 0
+[pid 17943] write(1, "This is a marker\n", 17) = 17
+
+```
 
 ---
 
