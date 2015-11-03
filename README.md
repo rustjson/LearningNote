@@ -193,7 +193,7 @@ sunan at Sunan-ubuntu in ~/c/more
 [child]ops, read error
 
 ```
-See ? You can still write, but can read.
+See ? You can still write, but can't read.
 
 ---
 ### Why async curl slower then curl on a 8 core machine when curl a static page servie by nginx
