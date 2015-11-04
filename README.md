@@ -197,6 +197,11 @@ See ? You can still write, but can't read.
 
 ---
 ### Why async curl slower then curl on a 8 core machine when curl a static page servie by nginx
+This graph show, async request has no big benefit compare with normal request
+So, I take a took of libcurl and run another example:
+https://raw.githubusercontent.com/bagder/curl/master/docs/examples/multi-app.c
+This guy was the author of libcurl :[https://github.com/bagder/]
+
 
 ---
 ### Why execute a new command by using ```./a.out``` always create a new process group ?
