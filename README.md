@@ -202,6 +202,56 @@ So, I take a took of libcurl and run another example:
 https://raw.githubusercontent.com/bagder/curl/master/docs/examples/multi-app.c
 This guy was the author of libcurl :[https://github.com/bagder/]
 
+https://github.com/bagder/curl/issues/519
+
+I think htop won't see the thread was it create and destory too fast. since debug could see every thread by it.
+
+By the way, HTOP are a really good program!
+
+---
+### Something relate gcc and linker and library 
+See this Makefile
+```Makefile
+CC=gcc
+
+all : multi-app httpcustomheader 10-at-a-time
+
+multi-app: multi-app.c
+	${CC} -g multi-app.c -lcurl -o multi-app
+
+httpcustomheader: httpcustomheader.c
+	${CC} -g httpcustomheader.c -lcurl -o httpcustomheader
+10-at-a-time: 10-at-a-time.c
+	${CC} -g 10-at-a-time.c -L/usr/local/curl/lib -I/usr/local/include -lcurl -o 10-at-a-time
+```
+Note that ``` -I ``` means include path. ```-L``` means library path. ```-l``` seems indicates we need that library!
+Also, We can use this ```LD_PRELOAD=/usr/local/curl/lib/libcurl.so strace -eclone ./multi-app``` to force our multi-app use libcurl.so as it's library. You can  use ```LD_PRELOAD=/usr/local/curl/lib/libcurl.so strace -eopen ./multi-app``` to comfirm that.
+```export LD_LIBRARY_PATH=/usr/local/curl/lib``` seems another good choose, But be aware of this:
+
+```
+open("/etc/ld.so.preload", O_RDONLY|O_CLOEXEC) = 3
+open("/lib/lib/x86_64-linux-gnu/liblsp.so", O_RDONLY|O_CLOEXEC) = 3
+open("/usr/local/curl/lib/tls/x86_64/libcurl.so.4", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/local/curl/lib/tls/libcurl.so.4", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/local/curl/lib/x86_64/libcurl.so.4", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/local/curl/lib/libcurl.so.4", O_RDONLY|O_CLOEXEC) = 3
+open("/usr/local/curl/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+open("/usr/local/curl/lib/libdl.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+open("/usr/local/curl/lib/libidn.so.11", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/lib/x86_64-linux-gnu/libidn.so.11", O_RDONLY|O_CLOEXEC) = 3
+open("/usr/local/curl/lib/librtmp.so.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/usr/lib/x86_64-linux-gnu/librtmp.so.0", O_RDONLY|O_CLOEXEC) = 3
+open("/usr/local/curl/lib/libssl.so.1.0.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/lib/x86_64-linux-gnu/libssl.so.1.0.0", O_RDONLY|O_CLOEXEC) = 3
+open("/usr/local/curl/lib/libcrypto.so.1.0.0", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/lib/x86_64-linux-gnu/libcrypto.so.1.0.0", O_RDONLY|O_CLOEXEC) = 3
+open("/usr/local/curl/lib/liblber-2.4.so.2", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+```
+It will load all the shared library from this path. So, I don't think this is a good ieda.  
+See [here](http://xahlee.info/UnixResource_dir/_/ldpath.html)
 
 ---
 ### Why execute a new command by using ```./a.out``` always create a new process group ?
