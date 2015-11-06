@@ -307,6 +307,10 @@ child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidp
 [pid 17943] write(1, "This is a marker\n", 17) = 17
 
 ```
+---
+[How to free cached mem in Linux](http://unix.stackexchange.com/questions/87908/how-do-you-empty-the-buffers-and-cache-on-a-linux-system)
+
+
 
 ---
 
