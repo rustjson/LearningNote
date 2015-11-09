@@ -2,13 +2,13 @@ package main
 
 import (
 	"github.com/davecheney/profile"
-	_ "net/http"
+	"net/http"
 	_ "net/http/pprof"
 	_ "time"
 )
 
 func test() {
-	for i := 0; i < 10000; i++ {
+	for i := 0; i < 100; i++ {
 		println("test")
 	}
 }
@@ -23,17 +23,19 @@ func main() {
 	}
 
 	defer profile.Start(&cfg).Stop()
-	go func() {
-		//http.ListenAndServe("0.0.0.0:6060", nil)
-	}()
 	c := make(chan int)
-	for i := 0; i < 100; i++ {
+	go func() {
+		http.ListenAndServe("0.0.0.0:6060", nil)
+	}()
+	<-c
+	for i := 0; i < 10000; i++ {
 		go func(i int) {
 			test()
 			c <- i
 		}(i)
 	}
-	for i := 0; i < 100; i++ {
+	<-c //for http
+	for i := 0; i < 10000; i++ {
 		<-c
 	}
 
