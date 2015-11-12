@@ -46,3 +46,26 @@ We will get this:
 
 ```
 Now it is easy to figure out how it works
+
+## Inside go Sche:
+In file [proc1.go#sysmon](https://github.com/golang/go/blob/release-branch.go1.5/src/runtime/proc1.go#L2959)
+
+this function call ```schedtrace(debug.scheddetail > 0)``` which produce some output like:
+
+```
+SCHED 522ms: gomaxprocs=1 idleprocs=0 threads=5 spinningthreads=0 idlethreads=0 runqueue=512 [123]
+SCHED 532ms: gomaxprocs=1 idleprocs=0 threads=5 spinningthreads=0 idlethreads=0 runqueue=512 [116]
+SCHED 542ms: gomaxprocs=1 idleprocs=0 threads=5 spinningthreads=0 idlethreads=0 runqueue=512 [109]
+SCHED 552ms: gomaxprocs=1 idleprocs=0 threads=5 spinningthreads=0 idlethreads=0 runqueue=512 [101]
+SCHED 562ms: gomaxprocs=1 idleprocs=0 threads=5 spinningthreads=0 idlethreads=0 runqueue=512 [94]
+```
+
+So I think sysmon() was being called very often. Let's figure out who is his caller.
+
+```
+./runtime/proc.go-	systemstack(func() {
+./runtime/proc.go:		newm(sysmon, nil)
+```
+
+Looks like ```systemstack()``` is a very foundermental function ?
+
