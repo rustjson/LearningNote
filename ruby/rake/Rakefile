@@ -1,0 +1,5 @@
+desc "hello world"
+task :hello  do
+  sh "echo 'Hello' >> 'hello.tmp'"
+end
+
