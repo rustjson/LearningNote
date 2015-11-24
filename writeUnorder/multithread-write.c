@@ -18,9 +18,13 @@ typedef struct _arg {
 void *writeFile(void *_arg) {
 	arg_t arg = *(arg_t *) _arg;
 	
+	int i = 0;
+	char buf[1000] = {0};
 
-	write(arg.fd, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\n", 53);
-	//printf("%d\n", arg.thread_id); 
+	for (; i < 1000; i++) {
+		buf[i] = i % 26 + 'A';	
+	}
+	write(arg.fd, buf, 1000);
 }
 
 int main() {
@@ -29,7 +33,7 @@ int main() {
 	arg_t args[TNUM];
 	int i = 0;
 
-	int fd = open(DST, O_APPEND|O_RDWR|O_CREAT, S_IRWXU);
+	int fd = open(DST, O_RDWR|O_CREAT, S_IRWXU);
 	if (fd == -1) {
 		perror("open");
 		return -1;
