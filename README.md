@@ -311,6 +311,9 @@ child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidp
 [How to free cached mem in Linux](http://unix.stackexchange.com/questions/87908/how-do-you-empty-the-buffers-and-cache-on-a-linux-system)
 
 
+---
+## How to change file permission under git with core.filemode=false
+http://stackoverflow.com/questions/10516201/updating-file-permissions-only-in-git
 
 ---
 
