@@ -22,7 +22,7 @@ int main() {
 		return 1;
 	}
 	if (pid > 0) {
-		printf("stackaddr = (%p <- %ld), heapaddr = (%p <- %s)\n", &pid, &pid, (int *)atol(heapaddr), heapaddr);
+		printf("stackaddr = (%p <- %ld), heapaddr = (%p <- %s)\n", &pid, &pid, heappid, heapaddr);
 
 		char *args[] = {"./hello", addr, heapaddr};
 

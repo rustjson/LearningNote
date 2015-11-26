@@ -16,7 +16,8 @@ int main(int argc, char *argv[]) {
 	
 	printf("stackaddr = %p heapaddr = %p\n", stacpid, heappid);
 	
-	printf("Try to depointer *pid=%d\n", *stacpid);	
+	printf("Try to depointer heap *heappid=%d\n", *heappid);	
+	printf("Try to depointer stac *stacpid=%d\n", *stacpid);	
 	return 0;
 }
 
