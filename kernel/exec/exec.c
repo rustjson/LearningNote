@@ -12,13 +12,16 @@ int main() {
 	fd = open("./Makefile");
 
 	
+	printf("env.EXEC=%s\n", getenv("EXEC"));
+	printf("strcmp %d\n", strcmp(getenv("EXEC"), "P"));
 	pid = fork();
 			
 	if (pid < 0) {
 		perror("Fork");
 		return 1;
 	}
-	if (pid == 0) {
+	if ((strcmp(getenv("EXEC"), "P") == 0 && pid != 0) || 
+		(strcmp(getenv("EXEC"), "C") == 0 && pid == 0)) {
 		char buf[3] = {'\0'};
 
 		read(fd, buf, 2);
