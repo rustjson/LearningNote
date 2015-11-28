@@ -18,7 +18,7 @@ int main() {
 		perror("Fork");
 		return 1;
 	}
-	if (pid != 0) {
+	if (pid == 0) {
 		char buf[3] = {'\0'};
 
 		read(fd, buf, 2);
