@@ -7,26 +7,28 @@ int main(int argc, char *argv[]) {
 	int *stacpid = NULL;
 	int *heappid = NULL;
 	
-	printf("-----------------------\n");
-	printf("%s\n", argv[2]);
-	printf("fd=%s\n", argv[2]);
-		char buf[1000] = {};
+	printf("-----------output of hello------------\n");
 
-		if (read(atol(argv[2]), buf, 1000) < 0) {
-			perror("read");
-		}
-
-		printf("content of Makefile is \n%s\n", buf);
-
-	printf("stackaddr = (%p <- %s), heapaddr = (%p <- %s)\n", (int *)atol(argv[1]), argv[1], (long *)atol(argv[2]), argv[2]);
 	
 	stacpid = (int *)atol(argv[1]);
 	heappid = (int *)atol(argv[2]);
 	
-	printf("stackaddr = %p heapaddr = %p\n", stacpid, heappid);
-	
+	printf("stackaddr = (%p <- %s), heapaddr = (%p <- %s)\n", stacpid, argv[1], heappid, argv[2]);
+
+	*heappid = 1;
+	*stacpid = 2;	
 	printf("Try to depointer heap *heappid=%d\n", *heappid);	
-	printf("Try to depointer stac *stacpid=%d\n", *stacpid);	
+	printf("Try to depointer stac *stacpid=%d\n", *stacpid);
+
+	printf("fd=%s\n", argv[3]);
+
+		char buf[2] = {};
+
+		if (read(atol(argv[3]), buf, 2) < 0) {
+			perror("read");
+		}
+
+		printf("content of Makefile is \n%s\n", buf);
 	return 0;
 }
 
