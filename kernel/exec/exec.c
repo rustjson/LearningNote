@@ -3,7 +3,12 @@
 #include <stdlib.h>
 
 
-int main() {
+int main() {	
+	if (getenv("EXEC") == NULL) {
+		printf("Please set env for EXEC\n");
+		printf("Run like >EXEC=P|C ./exec\n");
+		return 0;
+	}
 	int pid, fd;
 	int  *heappid = malloc(sizeof(int));;	
 	char *addr = malloc(20 * sizeof(char));
@@ -13,7 +18,6 @@ int main() {
 
 	
 	printf("env.EXEC=%s\n", getenv("EXEC"));
-	printf("strcmp %d\n", strcmp(getenv("EXEC"), "P"));
 	pid = fork();
 			
 	if (pid < 0) {
