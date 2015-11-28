@@ -9,6 +9,15 @@ int main(int argc, char *argv[]) {
 	
 	printf("-----------------------\n");
 	printf("%s\n", argv[2]);
+	printf("fd=%s\n", argv[2]);
+		char buf[1000] = {};
+
+		if (read(atol(argv[2]), buf, 1000) < 0) {
+			perror("read");
+		}
+
+		printf("content of Makefile is \n%s\n", buf);
+
 	printf("stackaddr = (%p <- %s), heapaddr = (%p <- %s)\n", (int *)atol(argv[1]), argv[1], (long *)atol(argv[2]), argv[2]);
 	
 	stacpid = (int *)atol(argv[1]);
