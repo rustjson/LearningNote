@@ -1,3 +1,3 @@
 pub fn goodbye() -> String {
-    "bonjour".to_string()
+    "au revoir".to_string()
 }
