@@ -2,6 +2,7 @@ extern crate language;
 
 use language::{english, french, chinese};
 
+#[cfg(not(target_os = "redox"))]
 fn main() {
     println!("Hello in English: {}", english::greetings::hello());
     println!("Hello in French: {}", french::greetings::hello());
