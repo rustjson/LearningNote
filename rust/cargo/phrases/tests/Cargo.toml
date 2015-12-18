@@ -1,0 +1,12 @@
+[package]
+name = "language_tests"
+version = "0.0.1"
+authors = ["Jason Young"]
+
+[lib]
+name = "language_tests"
+path = "lib.rs"
+doctest = false
+
+[dependencies.language]
+path = "../"
