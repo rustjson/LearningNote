@@ -317,7 +317,6 @@ http://stackoverflow.com/questions/10516201/updating-file-permissions-only-in-gi
 
 ---
 
-## :tiger: 王小湖北，你给我站住！:kissing_heart: 
 
 ## 好吧别理我，我今天早上没吃:pill: 
 
